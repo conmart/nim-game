@@ -21,8 +21,12 @@ class Game extends Component {
     }
   }
 
-  setGameState(){
-
+  toggleActiveColumns(setActiveColumn, setDotsSelected){
+    this.setState(prevState => {
+        prevState.activeColumn = setActiveColumn
+        prevState.dotsSelected = setDotsSelected
+        return prevState
+    })
   }
 
   newGame(){
@@ -59,8 +63,9 @@ class Game extends Component {
           {this.state.gameBoard.map( column => {
             return <div>
               <Column
-                dotsLeft={column.value}
+                column={column}
                 key={column.value + 1}
+                updateGameContainer={this.toggleActiveColumns.bind(this)}
                 active={column.id === this.state.activeColumn || this.state.activeColumn === 0}
                 />
               </div>

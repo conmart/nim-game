@@ -13,12 +13,9 @@ class Column extends Component {
 
   dotWasClicked(dotValue){
     let newDotsSelected = this.props.dotsSelected + dotValue
-    console.log(newDotsSelected);
     if (newDotsSelected > 0) {
-      console.log("Only I should be active");
       this.props.updateGameContainer(this.props.column, newDotsSelected)
     } else {
-      console.log("everyone should be active");
       this.props.updateGameContainer(0, 0)
     }
 
@@ -27,7 +24,6 @@ class Column extends Component {
 
   render(){
     let numberOfDots = [];
-    console.log('value of this column', this.props.column.value);
     for (let i=0; i<this.props.column.value; i++) {
       numberOfDots.push(
         <Dot key={i}
@@ -36,7 +32,7 @@ class Column extends Component {
     }
     return(
       <div className="GameColumn">
-        Column
+        <br />
         {numberOfDots}
       </div>
     )

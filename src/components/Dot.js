@@ -14,11 +14,9 @@ class Dot extends Component {
     if (this.state.selected) {
       var newSelected = false;
       var dotsSelected = -1;
-      console.log("dot deactivated");
     } else {
       var newSelected = true;
       var dotsSelected = 1
-      console.log("dot activated");
     }
     this.setState(prevState => {
         prevState.selected = newSelected

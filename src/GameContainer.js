@@ -67,8 +67,7 @@ class Game extends Component {
     let player = this.state.p1Turn ? "Player 1" : "Player 2";
     return(
       <div className="GameContainer">
-        This is the Game Container
-        <h3>It's {player}'s turn.</h3>
+        <h3>It's {player}'s turn:</h3>
         <div className="GameBoard">
           {this.state.gameBoard.map( column => {
             return <div>

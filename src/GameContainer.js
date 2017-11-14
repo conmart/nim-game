@@ -48,7 +48,7 @@ class Game extends Component {
       console.log("Clicked Confirm Move", activeColumn);
       this.setState(prevState => {
           prevState.activeColumn.value = updatedValue
-          prevState.p1Turn = false
+          prevState.p1Turn = !prevState.p1Turn
           prevState.activeColumn = 0
           prevState.dotsSelected = 0
           return prevState

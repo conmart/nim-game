@@ -10,13 +10,26 @@ class Dot extends Component {
     }
   }
 
+  doubleCheckState(){
+    if (this.state.selected === true && this.props.colorDots === false) {
+      console.log('hit compontentDidMount', this.props.colorDots);
+      this.setState(prevState => {
+        prevState.selected = false
+        return prevState
+      })
+      console.log(this.state);
+    }
+  }
+
   clicked(){
+    var newSelected;
+    var dotsSelected;
     if (this.state.selected) {
-      var newSelected = false;
-      var dotsSelected = -1;
+      newSelected = false;
+      dotsSelected = -1;
     } else {
-      var newSelected = true;
-      var dotsSelected = 1
+      newSelected = true;
+      dotsSelected = 1
     }
     this.setState(prevState => {
         prevState.selected = newSelected
@@ -26,8 +39,9 @@ class Dot extends Component {
   }
 
   render(){
+    this.doubleCheckState()
     if (this.props.active) {
-      let dotColor = this.state.selected ? 'orange' : 'black';
+      let dotColor = (this.state.selected && this.props.colorDots) ? 'orange' : 'black';
       let dotStyle = {
         color: dotColor,
       }

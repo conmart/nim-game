@@ -12,7 +12,8 @@ class Game extends Component {
         [ {value: 1, id:1}, {value: 3, id:2}, {value: 5, id:3}, {value: 7, id:4} ],
       p1Turn: true,
       activeColumn: 0,
-      dotsSelected: 0
+      dotsSelected: 0,
+      colorDots: false
     }
   }
 
@@ -20,6 +21,7 @@ class Game extends Component {
     this.setState(prevState => {
         prevState.activeColumn = setActiveColumn
         prevState.dotsSelected = setDotsSelected
+        prevState.colorDots = true
         console.log('game container handle', prevState);
         return prevState
     })
@@ -27,41 +29,37 @@ class Game extends Component {
 
   newGame(){
     console.log("Clicked New Game");
-    this.setState ({
-      gameBoard:
-        [ {value: 1, id:1}, {value: 3, id:2}, {value: 5, id:3}, {value: 7, id:4} ],
-      p1Turn: true,
-      activeColumn: 0,
-      dotsSelected: 0
+    this.setState (prevState => {
+      prevState.gameBoard = [ {value: 1, id:1}, {value: 3, id:2}, {value: 5, id:3}, {value: 7, id:4} ]
+      prevState.p1Turn = true
+      prevState.activeColumn = 0
+      prevState.dotsSelected = 0
+      prevState.colorDots = false
+      return prevState
     })
   }
 
 
   takeTurn(){
-    let totalDotsRemaining = this.state.gameBoard.reduce(function (a,b) { return a + b.value; }, 0);
-    if (this.state.dotsSelected === totalDotsRemaining) {
-      let winner = this.state.p1Turn ? "Player 2" : "Player 1";
-      window.alert(`${winner} Wins!!`)
-    } else {
-      let activeColumn = this.state.activeColumn;
-      let updatedValue = activeColumn.value - this.state.dotsSelected;
-      console.log("Clicked Confirm Move", activeColumn);
-      this.setState(prevState => {
-          prevState.activeColumn.value = updatedValue
-          prevState.p1Turn = !prevState.p1Turn
-          prevState.activeColumn = 0
-          prevState.dotsSelected = 0
-          return prevState
-    })}
+    if (this.state.dotsSelected > 0) {
+      let totalDotsRemaining = this.state.gameBoard.reduce(function (a,b) { return a + b.value; }, 0);
+      if (this.state.dotsSelected === totalDotsRemaining) {
+        let winner = this.state.p1Turn ? "Player 2" : "Player 1";
+        window.alert(`${winner} Wins!!`)
+      } else {
+        let activeColumn = this.state.activeColumn;
+        let updatedValue = activeColumn.value - this.state.dotsSelected;
+        console.log("Clicked Confirm Move", activeColumn);
+        this.setState(prevState => {
+            prevState.activeColumn.value = updatedValue
+            prevState.p1Turn = !prevState.p1Turn
+            prevState.activeColumn = 0
+            prevState.dotsSelected = 0
+            prevState.colorDots = false
+            return prevState
+      })}
+    }
   }
-
-  // isGameOver(){
-  //   let totalDotsRemaining = this.state.gameBoard.reduce(function (a,b) { return a + b.value; }, 0);
-  //   console.log(totalDotsRemaining);
-  //   if (totalDotsRemaining === 0) {
-  //
-  //   }
-  // }
 
   render(){
     let player = this.state.p1Turn ? "Player 1" : "Player 2";
@@ -77,6 +75,7 @@ class Game extends Component {
                 updateGameContainer={this.handleDotClick.bind(this)}
                 active={column === this.state.activeColumn || this.state.activeColumn === 0}
                 dotsSelected={this.state.dotsSelected}
+                colorDots={this.state.colorDots}
                 />
               </div>
           })}

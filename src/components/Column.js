@@ -28,7 +28,9 @@ class Column extends Component {
       numberOfDots.push(
         <Dot key={i}
         active={this.props.active}
-        updateGameState={this.dotWasClicked.bind(this)} />)
+        updateGameState={this.dotWasClicked.bind(this)}
+        colorDots={this.props.colorDots}
+         />)
     }
     return(
       <div className="GameColumn">
